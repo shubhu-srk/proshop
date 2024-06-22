@@ -11,7 +11,7 @@ import {
 } from "react-bootstrap";
 import { FaTrash } from 'react-icons/fa';
 import Message from '../components/Message';
-import { addToCart } from '../slices/cartSlice';
+import { addToCart , removeFromCart} from '../slices/cartSlice';
 
 import React from "react";
 
@@ -25,7 +25,9 @@ const CartScreen = () => {
   const addToCartHandler = async (product, qty) => {
     dispatch(addToCart({ ...product, qty }));
   };
- 
+  const removeFromCartHandler = (id) => {
+    dispatch(removeFromCart(id));
+  };
 
 
   return (
@@ -67,7 +69,7 @@ const CartScreen = () => {
                     <Button
                       type='button'
                       variant='light'
-                      
+                      onClick={() => removeFromCartHandler(item._id)}
                     >
                       <FaTrash />
                     </Button>
