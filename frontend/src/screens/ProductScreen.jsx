@@ -9,7 +9,8 @@ import { useGetProductDetailsQuery } from "../slices/productsApiSlice";
 
 //Axios to fetch from Backend
 //import axios from "axios";
-
+import Loader from "../components/Loader";
+import Message from "../components/Message";
 const ProductScreen = () => {
   const { id: productId } = useParams();
 
@@ -36,11 +37,12 @@ const ProductScreen = () => {
       <Link to="/" className="btn btn-light my-3">
         Go Back
       </Link>
-
       {isLoading ? (
-        <div>Loading...</div>
+        <Loader />
       ) : error ? (
-        <div>{error?.data?.message || error.error}</div>
+        <Message variant="danger">
+          {error?.data?.message || error.error}
+        </Message>
       ) : (
         <>
           <Row>

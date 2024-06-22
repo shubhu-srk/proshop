@@ -1,13 +1,15 @@
+import { Row, Col } from "react-bootstrap";
 
-import {Row , Col} from 'react-bootstrap';
-
-import Product from '../components/Product';
-import { useSearchParams } from 'react-router-dom';
+import Product from "../components/Product";
+import { useSearchParams } from "react-router-dom";
 
 //import {useEffect, useState} from 'react'
 //import axios from 'axios';
 
-import { useGetProductsQuery} from '../slices/productsApiSlice';
+import { useGetProductsQuery } from "../slices/productsApiSlice";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
+
 const Homescreen = () => {
   //const [products, setProducts] = useState([]);
 
@@ -22,7 +24,7 @@ const Homescreen = () => {
   const { data: products, isLoading, error } = useGetProductsQuery();
   return (
     <>
-        {/* <h1>Latest Products</h1>
+      {/* <h1>Latest Products</h1>
         <Row>
             { products.map((product) => (
                 <Col key={product.id} sm={12} md={6} lg={4} xl={3}>
@@ -31,11 +33,13 @@ const Homescreen = () => {
             )) }
         </Row> */}
 
-        {/* PR-29:Products API Slice and get Products Endpoint */}
-        {isLoading ? (
-        <div>Loading...</div>
+      {/* PR-29:Products API Slice and get Products Endpoint */}
+      {isLoading ? (
+        <Loader />
       ) : error ? (
-        <div>{error?.data.message || error.error}</div>
+        <Message variant="danger">
+          {error?.data?.message || error.error}
+        </Message>
       ) : (
         <>
           <h1>Latest Products</h1>
@@ -48,9 +52,8 @@ const Homescreen = () => {
           </Row>
         </>
       )}
-
     </>
-  )
-}
+  );
+};
 
-export default Homescreen
+export default Homescreen;
