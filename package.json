@@ -10,7 +10,7 @@
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm run server\"  \"npm run client\" ",
     "data": "node backend/seeder.js -d",
-    "data:import":"node backend/seeder.js",
+    "data:import": "node backend/seeder.js",
     "data:destroy": "node backend/seeder.js -d"
   },
   "author": "Shubham Kshirsagar",
@@ -21,6 +21,7 @@
     "colors": "^1.4.0",
     "express": "^4.19.2",
     "js": "^0.1.0",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.3"
   },
   "devDependencies": {
