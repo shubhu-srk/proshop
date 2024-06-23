@@ -2,15 +2,29 @@ import { Navbar, Nav, Container, NavDropdown, Badge } from "react-bootstrap";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
 import logo from "../assets/logo.png";
-import { useSelector } from "react-redux";
-
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useLogoutMutation } from '../slices/userApiSlice';
+import { logout } from '../slices/authSlice';
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
   console.log(cartItems);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+
+  //PR-50 Logout Functionality 
+  const [logoutApiCall] = useLogoutMutation();
   const { userInfo } = useSelector((state) => state.auth);
-  const logoutHandler = () => {
-    console.log("logout");
+  const logoutHandler = async () => {
+    try {
+      await logoutApiCall().unwrap();
+      dispatch(logout());
+      navigate('/login');
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
