@@ -16,6 +16,7 @@ import reportWebVitals from "./reportWebVitals";
 import Homescreen from "./screens/Homescreen";
 import ProductScreen from "./screens/ProductScreen";
 import CartScreen from "./screens/CartScreen"
+import LoginScreen from "./screens/LoginScreen";
 
 import store from "./store";
 import { Provider } from "react-redux";
@@ -26,6 +27,7 @@ const router = createBrowserRouter(
       <Route index={true} path="/" element={<Homescreen />} />
       <Route path="/product/:id" element={<ProductScreen />} />
       <Route path='/cart' element={<CartScreen />} />
+      <Route path='/login' element={<LoginScreen />} />
     </Route>
   )
 );
