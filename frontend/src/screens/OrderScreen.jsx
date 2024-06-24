@@ -1,21 +1,26 @@
 import { Link, useParams } from "react-router-dom";
-import { Row, Col, ListGroup, Image, Card,Button } from "react-bootstrap";
+import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import {
   useGetOrderDetailsQuery,
   usePayOrderMutation,
   useGetPaypalClientIdQuery,
-} from '../slices/orderApiSlice';
-import { useEffect } from 'react';
-import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
-import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
+} from "../slices/orderApiSlice";
+import { useEffect } from "react";
+import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
 
-  const { data: order, refetch, isLoading, error } = useGetOrderDetailsQuery(orderId);
+  const {
+    data: order,
+    refetch,
+    isLoading,
+    error,
+  } = useGetOrderDetailsQuery(orderId);
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
 
@@ -33,13 +38,13 @@ const OrderScreen = () => {
     if (!errorPayPal && !loadingPayPal && paypal.clientId) {
       const loadPaypalScript = async () => {
         paypalDispatch({
-          type: 'resetOptions',
+          type: "resetOptions",
           value: {
-            'client-id': paypal.clientId,
-            currency: 'USD',
+            "client-id": paypal.clientId,
+            currency: "USD",
           },
         });
-        paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
+        paypalDispatch({ type: "setLoadingStatus", value: "pending" });
       };
       if (order && !order.isPaid) {
         if (!window.paypal) {
@@ -54,7 +59,7 @@ const OrderScreen = () => {
       try {
         await payOrder({ orderId, details });
         refetch();
-        toast.success('Order is paid');
+        toast.success("Order is paid");
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
@@ -65,7 +70,7 @@ const OrderScreen = () => {
     await payOrder({ orderId, details: { payer: {} } });
     refetch();
 
-    toast.success('Order is paid');
+    toast.success("Order is paid");
   }
 
   function onError(err) {
@@ -85,9 +90,6 @@ const OrderScreen = () => {
         return orderID;
       });
   }
-
-
-
 
   return isLoading ? (
     <Loader />
