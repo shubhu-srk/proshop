@@ -6,6 +6,7 @@ import {
   useGetOrderDetailsQuery,
   usePayOrderMutation,
   useGetPaypalClientIdQuery,
+  useDeliverOrderMutation,
 } from "../slices/orderApiSlice";
 import { useEffect } from "react";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
@@ -27,7 +28,8 @@ const OrderScreen = () => {
   const { userInfo } = useSelector((state) => state.auth);
 
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
-
+  const [deliverOrder, { isLoading: loadingDeliver }] =
+    useDeliverOrderMutation();
   const {
     data: paypal,
     isLoading: loadingPayPal,
@@ -69,7 +71,7 @@ const OrderScreen = () => {
     await payOrder({ orderId, details: { payer: {} } });
     refetch();
 
-    toast.success('Payment succeessfful');
+    toast.success("Payment succeessfful");
   }
   function onError(err) {
     toast.error(err.message);
@@ -86,6 +88,15 @@ const OrderScreen = () => {
       .then((orderID) => {
         return orderID;
       });
+  }
+  const deliverOrderHandler = async()=>{
+    try {
+      await deliverOrder(orderId);
+      refetch();
+      toast.success("Order Delivered Successfully");
+      } catch (err) {
+        toast.error(err?.data?.message || err.message);
+        }
   }
 
   return isLoading ? (
@@ -223,6 +234,22 @@ const OrderScreen = () => {
                 </ListGroup.Item>
               )}
               {/* {MARK AS DELIVERED PLACEHOLDER} */}
+
+              {loadingDeliver && <Loader />}
+              {userInfo &&
+                userInfo.isAdmin &&
+                order.isPaid &&
+                !order.isDelivered && (
+                  <ListGroup.Item>
+                    <Button
+                      type="button"
+                      className="btn btn-block"
+                      onClick={deliverOrderHandler}
+                    >
+                      Mark As Delivered
+                    </Button>
+                  </ListGroup.Item>
+                )}
             </ListGroup>
           </Card>
         </Col>
