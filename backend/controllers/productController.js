@@ -10,7 +10,7 @@ const getProducts = asyncHandler(async (req, res) => {
   
   // const products = await Product.find({});
   // res.json(products);
-  const pageSize = 1;
+  const pageSize = 8;
   const page = Number(req.query.pageNumber) || 1;
 
   //PR-84

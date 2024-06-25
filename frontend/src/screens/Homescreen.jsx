@@ -1,7 +1,7 @@
 import { Row, Col } from "react-bootstrap";
 
 import Product from "../components/Product";
-import { useParams, useSearchParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 
 //import {useEffect, useState} from 'react'
 //import axios from 'axios';
@@ -37,6 +37,8 @@ const Homescreen = () => {
         </Row> */}
 
       {/* PR-29:Products API Slice and get Products Endpoint */}
+      {keyword && 
+      <Link to ='/' className="btn btn-light mb-4" >Go back </Link>}
       {isLoading ? (
         <Loader />
       ) : error ? (
