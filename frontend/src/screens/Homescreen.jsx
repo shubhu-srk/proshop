@@ -9,6 +9,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import Paginate from "../components/Paginate";
 
 
 const Homescreen = () => {
@@ -53,6 +54,11 @@ const Homescreen = () => {
               </Col>
             ))}
           </Row>
+          <Paginate
+          pages = {data.pages}
+          page = {data.page}
+          />
+         
         </>
       )}
     </>
