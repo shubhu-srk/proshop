@@ -10,6 +10,7 @@ import { useGetProductsQuery } from "../slices/productsApiSlice";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import Paginate from "../components/Paginate";
+import ProductCarousel from "../components/ProductCarousel";
 
 const Homescreen = () => {
   //const [products, setProducts] = useState([]);
@@ -37,8 +38,13 @@ const Homescreen = () => {
         </Row> */}
 
       {/* PR-29:Products API Slice and get Products Endpoint */}
-      {keyword && 
-      <Link to ='/' className="btn btn-light mb-4" >Go back </Link>}
+      {!keyword ? (
+        <ProductCarousel />
+      ) : (
+        <Link to='/' className='btn btn-light'>
+          Go Back
+        </Link>
+      )}
       {isLoading ? (
         <Loader />
       ) : error ? (
