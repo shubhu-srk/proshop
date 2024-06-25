@@ -12,12 +12,13 @@ import {
 } from "../../slices/productsApiSlice";
 import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
 const ProductListScreen = () => {
   const { pageNumber } = useParams();
-  const { data, error, isLoading, refetch } = useGetProductsQuery({pageNumber});
-  
+  const { data, error, isLoading, refetch } = useGetProductsQuery({
+    pageNumber,
+  });
 
   const [createProduct, { isLoading: loadingCreate }] =
     useCreateProductMutation();
@@ -25,11 +26,11 @@ const ProductListScreen = () => {
   const [deleteProduct, { isLoading: loadingDelete }] =
     useDeleteProductMutation();
 
-  const deleteHandler = async(id) => {
-    if (window.confirm('Are you sure you want to delete ?')) {
+  const deleteHandler = async (id) => {
+    if (window.confirm("Are you sure you want to delete ?")) {
       try {
         await deleteProduct(id);
-        toast.success('Product Deleted');
+        toast.success("Product Deleted");
         refetch();
       } catch (err) {
         toast.error(err?.data?.message || err.error);
@@ -41,7 +42,7 @@ const ProductListScreen = () => {
     if (window.confirm("Are you sure you want to create a new product?")) {
       try {
         await createProduct();
-        toast.success('Sample Product Created');
+        toast.success("Sample Product Created");
         refetch();
       } catch (err) {
         toast.error(err?.data?.message || err.error);
@@ -61,7 +62,7 @@ const ProductListScreen = () => {
         </Col>
       </Row>
       {loadingCreate && <Loader />}
-      {loadingDelete && <Loader/>}
+      {loadingDelete && <Loader />}
       {isLoading ? (
         <Loader />
       ) : error ? (

@@ -11,7 +11,6 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import Paginate from "../components/Paginate";
 
-
 const Homescreen = () => {
   //const [products, setProducts] = useState([]);
 
@@ -23,9 +22,9 @@ const Homescreen = () => {
 
   //   fetchProducts();
   // }, []);
-  const { pageNumber } = useParams();
+  const { pageNumber,keyword } = useParams();
   console.log(pageNumber);
-  const { data, isLoading, error } = useGetProductsQuery({pageNumber});
+  const { data, isLoading, error } = useGetProductsQuery({ keyword, pageNumber });
   return (
     <>
       {/* <h1>Latest Products</h1>
@@ -54,11 +53,10 @@ const Homescreen = () => {
               </Col>
             ))}
           </Row>
-          <Paginate
-          pages = {data.pages}
-          page = {data.page}
+          <Paginate pages={data.pages} page={data.page} 
+            keyword={keyword ? keyword : ''} 
+
           />
-         
         </>
       )}
     </>
